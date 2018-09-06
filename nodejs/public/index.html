@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Web Stack Benchmark (NodeJS - Express)</title>
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+              crossorigin="anonymous"></script>
+    <script>
+        var start = true;
+        var counter = 0;
+        var _total = 0;
+        var _start = null;
+        var _end = null;
+        function stop_test(){
+            start = false;
+            alert("Stopped");
+        }
+        function start_test(){
+            _start = performance.now();
+            counter++;
+            $.ajax({
+                url: "/data",
+                type: "get",
+                success: function(data){
+                    _end = performance.now();
+                    
+                    var _result = _end - _start;
+                    _total = _total + _result;
+                    var a = $('#test').html();
+                    $('#test').html(a + "Test no #" + counter + ", Performance : <b>" + _result.toString() + "</b> ms.<br>" );
+                    $('#avg').html("<b>Performance Average : " + (_total/counter).toString() + " ms. From " + counter + " callbacks</b>");
+                    
+                    if (start){
+                        start_test();
+                    }
+                    
+                    
+
+                },
+                error: function(){
+                }
+            })
+        }
+        
+    </script>
+</head>
+<body>
+    
+    <div style="text-align: center" >
+            <h1>Stack Benchmark for NodeJS (Express)</h1>
+            <button style="border: 0;padding: 15px;cursor: pointer" onclick="start_test()">Click To Start</button>
+            <button style="border: 0;padding: 15px;cursor: pointer" onclick="stop_test()">Click To Stop</button>
+    </div>
+    <div id="avg" style="width: 100%;height: 20px;background-color:aqua;margin-top: 10px"></div>
+    <div id="test" style="width: 100%;background-color:bisque;margin-top: 10px">
+        
+    </div>
+
+    
+</body>
+</html>

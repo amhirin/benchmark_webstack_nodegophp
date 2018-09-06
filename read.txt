@@ -1,0 +1,11 @@
+additional lib:
+
+PHP
+mysqli
+
+NodeJS
+mysql >> (npm link mysql)
+express >> (npm link express)
+
+Golang
+echo >> (go get -u github.com/labstack/echo/...)
